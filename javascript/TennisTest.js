@@ -1,3 +1,5 @@
+'use strict';
+
 if (typeof TennisGame1 === "undefined") {
     var TennisGame1 = require("./TennisGame1.js");
 }
@@ -49,7 +51,7 @@ var allScores = [
     [14, 16, "Win for player2"]
 ];
 
-var checkScore = function(reporter, TennisGame, player1Score, player2Score, expectedScore) {
+var checkScore = function (reporter, TennisGame, player1Score, player2Score, expectedScore) {
     var highestScore = Math.max(player1Score, player2Score);
     var game;
     var result;
@@ -81,9 +83,9 @@ var checkScore = function(reporter, TennisGame, player1Score, player2Score, expe
     reporter.addCase(expectedScore, ok, message);
 };
 
-var runSuiteOnGame = function(reporter, TennisGame, title) {
+var runSuiteOnGame = function (reporter, TennisGame, title) {
     reporter.addSuite(title);
-    allScores.forEach(function(score) {
+    allScores.forEach(function (score) {
         checkScore(reporter, TennisGame, score[0], score[1], score[2]);
     });
 };
@@ -145,6 +147,6 @@ if (typeof window !== "undefined") {
 }
 
 runSuiteOnGame(reporter, TennisGame1, "TennisGame1");
-runSuiteOnGame(reporter, TennisGame2, "TennisGame2");
-runSuiteOnGame(reporter, TennisGame3, "TennisGame3");
+//runSuiteOnGame(reporter, TennisGame2, "TennisGame2");
+//runSuiteOnGame(reporter, TennisGame3, "TennisGame3");
 reporter.done();
