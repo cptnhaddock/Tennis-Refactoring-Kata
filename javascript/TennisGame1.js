@@ -1,63 +1,58 @@
 'use strict';
 
+var scoresTie = [
+    'Love',
+    'Fifteen',
+    'Thirty',
+    'Deuce'
+];
+
+var scores = [
+    'Love',
+    'Fifteen',
+    'Thirty',
+    'Forty'
+];
+
 var TennisGame1 = function (player1Name, player2Name) {
-    this.players = [
-        {player1Name: 0},
-        {player2Name: 0}
-    ];
-    console.log(this);
+    this.player1 = { name: player1Name, points: 0 };
+    this.player2 = { name: player2Name, points: 0 };
 };
 
 TennisGame1.prototype.wonPoint = function (playerName) {
-    console.log(this.players[playerName]);
-
+    if (playerName === "player1") {
+        this.player1.points += 1;
+    } else {
+        this.player2.points += 1;
+    }
 };
 
-TennisGame1.prototype.getScore = function() {
+function getTieResult(result) {
+    return result < 3 ? scoresTie[result] + '-All' : scoresTie[3];
+}
+
+function getResult(result) {
+    return scores[result];
+}
+
+TennisGame1.prototype.getScore = function () {
     var score = "",
-        tempScore = 0;
-    if (this.players[0] === this.players[1]) {
-        switch (this.players[0]) {
-        case 0:
-            score = "Love-All";
-            break;
-        case 1:
-            score = "Fifteen-All";
-            break;
-        case 2:
-            score = "Thirty-All";
-            break;
-        default:
-            score = "Deuce";
-            break;
+        diffResult = 0,
+        i;
+    if (this.player1.points === this.player2.points) {
+        score = getTieResult(this.player1.points);
+    } else if (this.player1.points >= 4 || this.player2.points >= 4) {
+        diffResult = this.player1.points - this.player2.points;
+
+        if (Math.abs(diffResult) === 1) {
+            score = "Advantage ";
+        } else if (Math.abs(diffResult) >= 2) {
+            score = "Win for ";
         }
-    } else if (this.players[0] >= 4 || this.players[1] >= 4) {
-        var minusResult = this.players[0] - this.players[1];
-        if (minusResult === 1) score = "Advantage player1";
-        else if (minusResult === -1) score = "Advantage player2";
-        else if (minusResult >= 2) score = "Win for player1";
-        else score = "Win for player2";
+        score += diffResult > 0 ? 'player1' : 'player2';
     } else {
-        for (var i = 1; i < 3; i++) {
-            if (i === 1) tempScore = this.players[0];
-            else {
-                score += "-";
-                tempScore = this.players[1];
-            }
-            switch (tempScore) {
-                case 0:
-                    score += "Love";
-                    break;
-                case 1:
-                    score += "Fifteen";
-                    break;
-                case 2:
-                    score += "Thirty";
-                    break;
-                case 3:
-                    score += "Forty";
-                    break;
-            }
+        for (i = 0; i <= 1; i++) {
+            score += i === 0 ? getResult(this.player1.points) : '-' + getResult(this.player2.points);
         }
     }
     return score;

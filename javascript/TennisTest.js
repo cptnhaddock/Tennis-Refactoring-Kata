@@ -52,12 +52,12 @@ var allScores = [
 ];
 
 var checkScore = function (reporter, TennisGame, player1Score, player2Score, expectedScore) {
-    var highestScore = Math.max(player1Score, player2Score);
-    var game;
-    var result;
-    var message = "";
-    var ok = false;
-    var i;
+    var highestScore = Math.max(player1Score, player2Score),
+        game,
+        result,
+        message = '',
+        ok = false,
+        i;
 
     try {
         game = new TennisGame("player1", "player2");
